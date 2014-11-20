@@ -10,12 +10,14 @@ public class LineGame {
 
     public LineGame(int sizeOfGame) {
         rows = new ArrayList<char[]>();
+        int rowSize = 1;
         for(int i = 1; i <= sizeOfGame; i++) {
-            char[] temp = new char[i];
+            char[] temp = new char[rowSize];
             for(int k = 0; k < temp.length; k++) {
                 temp[k] = '|';
             }
             rows.add(temp);
+            rowSize += 2;
         }
     }
 
@@ -33,6 +35,8 @@ public class LineGame {
     public void crossLine(int row, int start, int stop) {
         for(int i = start; i <= stop ; i++) {
             rows.get(row)[i] = '+';
+            //TODO
+            //Needs to make sure move is legal.
         }
     }
 
@@ -55,9 +59,12 @@ public class LineGame {
     }
 
     public static void main(String[] args) {
-        LineGame temp = new LineGame(4);
-        boolean gameNotOver = true;
         Scanner key = new Scanner(System.in);
+        System.out.println("Enter size of game. Standard is 4.");
+        int gameSize = key.nextInt();
+        System.out.println();
+        LineGame temp = new LineGame(gameSize);
+        boolean gameNotOver = true;
         while(gameNotOver) {
             int row;
             int start;
@@ -76,5 +83,8 @@ public class LineGame {
             temp.crossLine(row, start , stop);
             gameNotOver = temp.gameOver();
         }
+        System.out.println();
+        temp.printGame();
+        System.out.println("Game OVER!!!");
     }
 }

@@ -37,6 +37,7 @@ public class LineGame {
             rows.get(row)[i] = '+';
             //TODO
             //Needs to make sure move is legal.
+            //did this branch work?
         }
     }
 

@@ -33,11 +33,14 @@ public class LineGame {
      * @param stop the last one to cross off
      */
     public void crossLine(int row, int start, int stop) {
+        for(int k = start; k < stop; k++) {
+            if(rows.get(row)[k] == '+') {
+                System.out.println("Invalid Move!");
+                return;
+            }
+        }
         for(int i = start; i <= stop ; i++) {
             rows.get(row)[i] = '+';
-            //TODO
-            //Needs to make sure move is legal.
-            //did this branch work?
         }
     }
 

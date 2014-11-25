@@ -78,6 +78,48 @@ public class LineGame {
         return false;
     }
 
+    public void play(Scanner key, int gameSize) {
+        System.out.println();
+        boolean isValid = true;
+        int row = 0;
+        int start = 0;
+        int stop = 0;
+        while(isValid) {
+            System.out.println("Enter the row you want to cross off");
+            row = key.nextInt() - 1;
+            if (!(row >= 0 && row < gameSize)) {
+                System.out.println("That is not a valid row! Try Again!");
+            } else {
+                isValid = false;
+            }
+        }
+
+        isValid = true;
+        while(isValid) {
+            System.out.println("Enter were you want to start crossing");
+            start = key.nextInt() - 1;
+            if (!(start >= 0 && start < rows.get(row).length)) {
+                System.out.println("That is not a valid start! Try Again!");
+            } else {
+                isValid = false;
+            }
+        }
+
+        isValid = true;
+        while(isValid) {
+            System.out.println("Enter were you want to stop crossing");
+            stop = key.nextInt() - 1;
+            if (!(stop >= 0 && row < rows.get(row).length)) {
+                System.out.println("That is not a valid stop! Try Again!");
+            } else {
+                isValid = false;
+            }
+        }
+
+        this.crossLine(row, start, stop);
+
+    }
+
     public static void main(String[] args) {
         Scanner key = new Scanner(System.in);
         System.out.println("Enter size of game. Standard is 4.");
@@ -85,29 +127,14 @@ public class LineGame {
         System.out.println();
         LineGame temp = new LineGame(gameSize);
         boolean gameNotOver = true;
-        int row;
-        int start;
-        int stop;
         while(gameNotOver) {
-            row = 0;
-            start = 0;
-            stop = 0;
             temp.printGame();
-            System.out.println();
-            System.out.println("Enter The Row you want to cross off");
-            row = key.nextInt();
-            System.out.println();;
-            System.out.println("Enter the line you want to start at");
-            start = key.nextInt();
-            System.out.println();
-            System.out.println("Enter the Line you want to stop at");
-            stop = key.nextInt();
-            System.out.println();
-            temp.crossLine(row, start , stop);
+            temp.play(key, gameSize);
             gameNotOver = temp.gameOver();
         }
         System.out.println();
         temp.printGame();
         System.out.println("Game OVER!!!");
+        key.close();
     }
 }

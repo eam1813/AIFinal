@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 /**
  * Created by matt on 11/20/2014.
+ * implementation of the line game
+ * prints out everything to std out.
  */
 public class LineGame {
 
@@ -23,11 +25,22 @@ public class LineGame {
         this.player = 1;
     }
 
+    /**
+     * returns arraylist of char arrays containing the lines
+     * @return array list of char arrays
+     */
     public ArrayList<char[]> getRows() {
         return rows;
     }
 
 
+    /**
+     * checks if the move is valid
+     * @param row the row to cross off
+     * @param start the first one to start crossing at
+     * @param stop the last one to cross off
+     * @return
+     */
     public boolean isValidMove(int row, int start, int stop) {
         for(int k = start; k < stop; k++) {
             if(rows.get(row)[k] == '+') {
@@ -45,7 +58,7 @@ public class LineGame {
      * @param start the first one to cross off
      * @param stop the last one to cross off
      */
-    public void crossLine(int row, int start, int stop) {
+    public boolean crossLine(int row, int start, int stop) {
         if(this.isValidMove(row, start, stop)) {
             for (int i = start; i <= stop; i++) {
                 rows.get(row)[i] = '+';
@@ -55,11 +68,16 @@ public class LineGame {
             } else {
                 this.player = 1;
             }
+            return true;
         } else {
             System.out.println("Invalid move");
+            return false;
         }
     }
 
+    /**
+     * prints game out to standard out
+     */
     public void printGame() {
         for(int i = 0; i < rows.size(); i++) {
             System.out.print(rows.get(i));
@@ -67,6 +85,10 @@ public class LineGame {
         }
     }
 
+    /**
+     * Checks if all lines are crossed off
+     * @return true if the game is not over false otherwise
+     */
     public boolean gameOver() {
         for(int i = 0; i < rows.size(); i++) {
             for(int l = 0; l < rows.get(i).length; l++) {
@@ -78,6 +100,11 @@ public class LineGame {
         return false;
     }
 
+    /**
+     * makes sure all the rows and the start and stop are valid indexes
+     * @param key scanner to get input from standard in
+     * @param gameSize size of the game or number of rows
+     */
     public void play(Scanner key, int gameSize) {
         System.out.println();
         boolean isValid = true;
@@ -115,8 +142,9 @@ public class LineGame {
                 isValid = false;
             }
         }
-
-        this.crossLine(row, start, stop);
+        if(this.crossLine(row, start, stop)) {
+            this.play(key, gameSize);
+        }
 
     }
 

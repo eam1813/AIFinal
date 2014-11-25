@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class LineGame {
 
     private ArrayList<char[]> rows;
+    private int player;
 
     public LineGame(int sizeOfGame) {
         rows = new ArrayList<char[]>();
@@ -19,11 +20,22 @@ public class LineGame {
             rows.add(temp);
             rowSize += 2;
         }
+        this.player = 1;
     }
 
-   
     public ArrayList<char[]> getRows() {
         return rows;
+    }
+
+
+    public boolean isValidMove(int row, int start, int stop) {
+        for(int k = start; k < stop; k++) {
+            if(rows.get(row)[k] == '+') {
+                System.out.println("Invalid Move!");
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -34,14 +46,17 @@ public class LineGame {
      * @param stop the last one to cross off
      */
     public void crossLine(int row, int start, int stop) {
-        for(int k = start; k < stop; k++) {
-            if(rows.get(row)[k] == '+') {
-                System.out.println("Invalid Move!");
-                return;
+        if(this.isValidMove(row, start, stop)) {
+            for (int i = start; i <= stop; i++) {
+                rows.get(row)[i] = '+';
             }
-        }
-        for(int i = start; i <= stop ; i++) {
-            rows.get(row)[i] = '+';
+            if (this.player == 1) {
+                this.player = 2;
+            } else {
+                this.player = 1;
+            }
+        } else {
+            System.out.println("Invalid move");
         }
     }
 
@@ -70,10 +85,13 @@ public class LineGame {
         System.out.println();
         LineGame temp = new LineGame(gameSize);
         boolean gameNotOver = true;
+        int row;
+        int start;
+        int stop;
         while(gameNotOver) {
-            int row;
-            int start;
-            int stop;
+            row = 0;
+            start = 0;
+            stop = 0;
             temp.printGame();
             System.out.println();
             System.out.println("Enter The Row you want to cross off");

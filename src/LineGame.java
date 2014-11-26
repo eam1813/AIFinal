@@ -42,9 +42,8 @@ public class LineGame {
      * @return
      */
     public boolean isValidMove(int row, int start, int stop) {
-        for(int k = start; k < stop; k++) {
+        for(int k = start; k <= stop; k++) {
             if(rows.get(row)[k] == '+') {
-                System.out.println("Invalid Move!");
                 return false;
             }
         }
@@ -70,7 +69,7 @@ public class LineGame {
             }
             return true;
         } else {
-            System.out.println("Invalid move");
+            System.out.println("Invalid move!");
             return false;
         }
     }
@@ -142,10 +141,12 @@ public class LineGame {
                 isValid = false;
             }
         }
-        if(this.crossLine(row, start, stop)) {
-            this.play(key, gameSize);
-        }
+        this.crossLine(row, start, stop);
 
+    }
+
+    public int getPlayer() {
+        return player;
     }
 
     public static void main(String[] args) {
@@ -156,12 +157,14 @@ public class LineGame {
         LineGame temp = new LineGame(gameSize);
         boolean gameNotOver = true;
         while(gameNotOver) {
+            System.out.println("It is player " + temp.getPlayer() +"'s turn");
             temp.printGame();
             temp.play(key, gameSize);
             gameNotOver = temp.gameOver();
         }
         System.out.println();
         temp.printGame();
+        System.out.println();
         System.out.println("Game OVER!!!");
         key.close();
     }

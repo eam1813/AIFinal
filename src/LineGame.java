@@ -145,6 +145,21 @@ public class LineGame {
 
     }
 
+    public ArrayList<int[]> getValidMovesPerRow(int row) {
+        ArrayList<int[]> arraylist = new ArrayList<int[]>();
+        for(int i = 0; i < rows.get(row).length; i++) {
+            for(int j = i; j < rows.get(row).length; j++) {
+                if(isValidMove(row, i, j)) {
+                    int[] temps = new int[2];
+                    temps[0] = i;
+                    temps[1] = j;
+                    arraylist.add(temps);
+                }
+            }
+        }
+        return arraylist;
+    }
+
     public int getPlayer() {
         return player;
     }
@@ -154,18 +169,27 @@ public class LineGame {
         System.out.println("Enter size of game. Standard is 4.");
         int gameSize = key.nextInt();
         System.out.println();
+        System.out.println("Do you want to play against a random? yes or no?");
         LineGame temp = new LineGame(gameSize);
+        RandomPlayer random = null;
+        if(key.next().equals("yes")) {
+            random = new RandomPlayer(temp);
+        }
         boolean gameNotOver = true;
         while(gameNotOver) {
             System.out.println("It is player " + temp.getPlayer() +"'s turn");
             temp.printGame();
-            temp.play(key, gameSize);
+            if(random != null && temp.getPlayer() == 2) {
+                random.play();
+            } else {
+                temp.play(key, gameSize);
+            }
             gameNotOver = temp.gameOver();
         }
         System.out.println();
         temp.printGame();
         System.out.println();
-        System.out.println("Game OVER!!!");
+        System.out.println("Game OVER!!!" +  " Player " + temp.getPlayer() + " Won");
         key.close();
     }
 }

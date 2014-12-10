@@ -19,10 +19,14 @@ public class RandomPlayer {
     }
 
     public void play() {
-        int row = rnd.nextInt(this.game.getRows().size());
-        ArrayList<int[]> temp = this.getValidMoves(row);
+        int row = 0;
+        ArrayList<int[]> temp = new ArrayList<int[]>();
+        while(temp.size() == 0) {
+            row = rnd.nextInt(this.game.getRows().size());
+            temp = this.getValidMoves(row);
+        }
         int number = rnd.nextInt(temp.size());
         int[] startStop = temp.get(number);
-        game.crossLine(row ,startStop[0]+1, startStop[1]+1);
+        game.crossLine(row, startStop[0], startStop[1]);
     }
 }

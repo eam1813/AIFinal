@@ -169,18 +169,30 @@ public class LineGame {
         System.out.println("Enter size of game. Standard is 4.");
         int gameSize = key.nextInt();
         System.out.println();
-        System.out.println("Do you want to play against a random? yes or no?");
         LineGame temp = new LineGame(gameSize);
-        RandomPlayer random = null;
-        if(key.next().equals("yes")) {
-            random = new RandomPlayer(temp);
+        System.out.println("Who is player 1?");
+        System.out.println("1 for human 2 for random computer player");
+        int player1 = key.nextInt();
+        System.out.println();
+        System.out.println("Who is player 2?");
+        System.out.println("1 for human 2 for random computer player");
+        int player2 = key.nextInt();
+        RandomPlayer random1 = null;
+        RandomPlayer random2 = null;
+        if(player1 == 2) {
+             random1 = new RandomPlayer(temp);
+        }
+        if(player2 == 2) {
+            random2 = new RandomPlayer(temp);
         }
         boolean gameNotOver = true;
         while(gameNotOver) {
             System.out.println("It is player " + temp.getPlayer() +"'s turn");
             temp.printGame();
-            if(random != null && temp.getPlayer() == 2) {
-                random.play();
+            if(random1 != null && temp.getPlayer() == 1) {
+                random1.play();
+            } else if(random2 != null && temp.getPlayer() == 2) {
+                random2.play();
             } else {
                 temp.play(key, gameSize);
             }
